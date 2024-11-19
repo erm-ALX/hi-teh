@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEH</title>
+    <style>
+        body {
+            font-family: Times New Roman;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        #question {
+            font-size: 24px;
+            color: black; /* Text is now black */
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        #image {
+            margin-top: 20px;
+            display: none;
+        }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: random;
+            animation: fall 2s infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100px); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="question">Teh, libre mo ko <3 </div>
+        <button id="yes">sige</button>
+        <button id="no">ayaw</button>
+        <img id="image" src="" alt="" width="300">
+    </div>
+    <script>
+        const question = document.getElementById('question');
+        const image = document.getElementById('image');
+        const yesButton = document.getElementById('yes');
+        const noButton = document.getElementById('no');
+
+        const annoyedImages = [
+            "annoyed1.jpg", // annoyed.jpg
+            "annoyed2.jpg", // annoyed2.jpg
+            "annoyed3.jpg"  // annoyed3.png
+        ];
+
+        // When the user clicks Yes
+        yesButton.addEventListener('click', () => {
+            question.innerText = "Yay labyu!";
+            image.src = "happy.jpg"; // Replace with a happy image URL
+            image.style.display = "block";
+            showConfetti();
+        });
+
+        // When the user interacts with No
+        noButton.addEventListener('mouseover', moveNoButton); 
+        noButton.addEventListener('click', moveNoButton);
+
+        function moveNoButton() {
+            const x = Math.random() * (window.innerWidth - noButton.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+
+            noButton.style.position = "absolute";
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+
+            // Change the image to an annoyed expression if clicked
+            image.src = annoyedImages[Math.floor(Math.random() * annoyedImages.length)];
+            image.style.display = "block";
+        }
+
+        function showConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.animationDuration = Math.random() * 2 + 1 + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 2000);
+            }
+        }
+    </script>
+</body>
+</html>
